@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ideal</title>
+  <meta charset="utf-8">
+</head>
+<body>
+<div id="app">
+  <p>{{msg}}</p>
+  <p>{{msg}}</p>
+  <p>{{msg}}</p>
+</div>
+<script>
+  const app = new vue('app', {msg: 'hello'})
+  function vue(id, initData) {
+    const vueDom = this.el = document.getElementById(id) //获取 #app dom <div id="app">...</div>
+    const data = this.data = {}
+    const bindingMark = 'bind-dom-flag'
+    const dataAttrs = {}
+    vueDom.innerHTML = vueDom.innerHTML.replace(/{{(.*)}}/g, (match, dataAttrName) => {
+      dataAttrs[dataAttrName] = {} // {msg: {}}
+      return '<span ' + bindingMark + '="' + dataAttrName + '"></span>'
+    })
+    for (const dataAttrName in dataAttrs) {
+      const doms = vueDom.querySelectorAll('[' + bindingMark + '="' + dataAttrName + '"]')
+      doms.forEach((e) => {
+        e.removeAttribute(bindingMark)
+      })
+      const dataAttrObj = dataAttrs[dataAttrName]
+      Object.defineProperty(data, dataAttrName, {
+        get() {
+          return dataAttrObj.val
+        },
+        set(newVal) {
+          doms.forEach((dom) => {
+            dataAttrObj.val = dom.textContent = newVal
+          })
+        }
+      })
+    }
+    for (const attr in initData) {
+      this.data[attr] = initData[attr]
+    }
+  }
+</script>
+</body>
+</html>
