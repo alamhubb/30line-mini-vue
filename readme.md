@@ -110,9 +110,9 @@ html如下：
 </div>
 ```
 
-### 结尾总结：
+## 结尾总结：
 
-看文本篇文章，相信大家对vue的基本原理和实现方式都能有一个清晰的认识了吧，赶紧动手去撸一个mini-vue吧，这已经是面试中必不可少的试题了
+看完本篇文章，相信大家对vue的基本原理和实现方式都能有一个清晰的认识了吧，赶紧动手去撸一个mini-vue吧，这已经是面试中必不可少的试题了
 
 文中不足之处欢迎大家指正批评，有需要交流的问题也欢迎大家踊跃留言。
 
@@ -123,9 +123,9 @@ html如下：
 
 我们的技术栈，伪全栈，前端js，vue，uniapp，后端java
 
-清池app官网：https://www.qingchi1.com
+清池app官网：[https://www.qingchi1.com](https://www.qingchi1.com)
 
-关于和联系我们：https://www.qingchi1.com/about
+关于和联系我们：[https://www.qingchi1.com/about](https://www.qingchi1.com/about)
 
 公众号：qingchiapp，(关注公众号获取清池app项目的开源代码，星空话缘，原谅这个名字是之前的，以后会改成清池app开发日记)
 
