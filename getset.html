@@ -1,83 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>ideal</title>
-  <meta charset="utf-8">
-</head>
-<body>
-<div id="app">
-  <p>{{msg}}</p>
-  <p>{{msg}}</p>
-  <p>{{msg}}</p>
-</div>
-<script>
-  //定义常量，用来标示需要被替换的dom元素
-  const bindingMark = 'bind-dom-flag'
+	<head>
+		<title>ideal</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="test">
+			<p>{{msg}}</p>
+			<p>{{msg}}</p>
+			<p>{{msg}}</p>
+			<p>{{what}}</p>
+			<p>{{hey}}</p>
+		</div>
+		<script>
+			var bindingMark = 'data-element-binding'
+			function Element (id, initData) {
 
-  const app = new vue('app', {
-    msg: 'hello'
-  })
+				var self	 = this,
+					el 		 = self.el = document.getElementById(id)
+					bindings = {} // the internal copy
+					data 	 = self.data = {} // the external interface
+					content  = el.innerHTML.replace(/\{\{(.*)\}\}/g, markToken)
 
+				el.innerHTML = content
 
-  function vue(id, initData) {
-    const self = this
+				for (var variable in bindings) {
+					bind(variable)
+				}
 
-    //获取vue实例绑定的dom根节点
-    const el = self.el = document.getElementById(id)
-    //定义data中需要替换的属性和属性对应的dom集合，代码执行后为 此处为 {msg: {els: NodeList(3), value: "hello"}}
-    bindings = {} // the internal copy
-    //定义属性集合
-    data = self.data = {} // the external interface
-    //找到需要进行数据绑定的dom
-    content = el.innerHTML.replace(/\{\{(.*)\}\}/g, markToken)
-    el.innerHTML = content
+				if (initData) {
+					for (var variable in initData) {
+						data[variable] = initData[variable]
+					}
+				}
 
-    //给需要替换的
-    function markToken(match, variable) {
-      bindings[variable] = {}
-      return '<span ' + bindingMark + '="' + variable + '"></span>'
-    }
+				function markToken (match, variable) {
+					bindings[variable] = {}
+					return '<span ' + bindingMark + '="' + variable +'"></span>'
+				}
 
-    //经过上面bindings里面就有值了
-    for (var variable in bindings) {
-      bind(variable)
-    }
+				function bind (variable) {
+					bindings[variable].els = el.querySelectorAll('[' + bindingMark + '="' + variable + '"]')
+				    ;[].forEach.call(bindings[variable].els, function (e) {
+				        e.removeAttribute(bindingMark)
+				    })
+					Object.defineProperty(data, variable, {
+						set: function (newVal) {
+						    [].forEach.call(bindings[variable].els, function (e) {
+						        bindings[variable].value = e.textContent = newVal
+						    })
+						},
+						get: function () {
+						    return bindings[variable].value
+						}
+					})
+				}
+			}
+			
+			var app = new Element('test', {
+				msg: 'hello'
+			})
 
-    function bind(variable) {
-      const valObj = bindings[variable]
-      //获取所有当前val的dom
-      const doms = valObj.els = el.querySelectorAll('[' + bindingMark + '="' + variable + '"]');
-
-      //移除dom上的tag
-      doms.forEach((e) => {
-        e.removeAttribute(bindingMark)
-      })
-
-      Object.defineProperty(data, variable, {
-        set: function (newVal) {
-          doms.forEach(function (e) {
-            valObj.value = e.textContent = newVal
-          })
-        },
-        get: function () {
-          return valObj.value
-        }
-      })
-    }
-
-
-    //初始化data
-    if (initData) {
-      for (var variable in initData) {
-        data[variable] = initData[variable]
-        console.log(data)
-      }
-    }
-
-    console.log(bindings)
-    console.log(data)
-  }
-
-</script>
-</body>
+		</script>
+	</body>
 </html>
