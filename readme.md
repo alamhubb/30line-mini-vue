@@ -123,9 +123,9 @@ html如下：
 
 我们的技术栈，伪全栈，前端js，vue，uniapp，后端java
 
-清池app官网：[https://www.qingchi1.com](https://www.qingchi1.com)
+清池app官网：[www.qingchi1.com](https://www.qingchi1.com)
 
-关于和联系我们：[https://www.qingchi1.com/about](https://www.qingchi1.com/about)
+关于和联系我们：[www.qingchi1.com/about](https://www.qingchi1.com/about)
 
 公众号：qingchiapp，(关注公众号获取清池app项目的开源代码，星空话缘，原谅这个名字是之前的，以后会改成清池app开发日记)
 
